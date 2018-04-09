@@ -34,8 +34,10 @@ public class View extends JPanel{
 	
 	
 	// Frame count for each movement
-	private ArrayList<BufferedImage[]> orcAnimations = new ArrayList<BufferedImage[]>();
-
+	//private ArrayList<BufferedImage[]> orcAnimations = new ArrayList<BufferedImage[]>();
+	private OrcImages orcAnimations = new OrcImages();
+	
+	
 	private JFrame frame;
 	// Current pic in the animation and the picNum for animation iteration
 	private BufferedImage[] currentPic;
@@ -64,20 +66,12 @@ public class View extends JPanel{
 		}
  
 		// Store images
-		for(String imgLoc : orcFileLocs) {
-			BufferedImage img = createImage(imgLoc);
-			int frameCount = img.getWidth() / subImageHeight;
-			BufferedImage[] pics = new BufferedImage[frameCount];
-			for(int i = 0; i < frameCount; i++) {
-				pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
-			}
-			orcAnimations.add(pics);
-			
-		}
+		orcAnimations.loadAnimationSet();
     	
 		// Set current pic and start animation at frame 0;
 		picNum = 0;
-		currentPic = orcAnimations.get(3);
+		direct = Direction.SOUTHEAST;
+		currentPic = orcAnimations.getAnimationImages(Action.FORWARD, direct);
 		
 		JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
 		buttonPanel.add(startStopButton);
@@ -120,18 +114,7 @@ public class View extends JPanel{
 		return drawDelay;
 	}
 	
-    //Read image from file and return
-    private BufferedImage createImage(String loc){
-    	BufferedImage bufferedImage;
-    	try {
-    		bufferedImage = ImageIO.read(new File(loc));
-    		return bufferedImage;
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
-    	return null;
-    	
-    }
+    
     
     // Updates the image based on changes in the model
     public void update(int xL, int yL, Direction dir) {
@@ -139,38 +122,13 @@ public class View extends JPanel{
     	xLoc = xL;
     	yLoc = yL;
     	direct = dir;
-    	
-    	
+    		
     	// update the current animation to the current animation set.
-    	switch (direct){
-    		case NORTH:
-    			currentPic = orcAnimations.get(0);
-    			break;
-    		case NORTHEAST:
-        		currentPic = orcAnimations.get(1);    		
-        		break;
-    		case EAST:
-        		currentPic = orcAnimations.get(2);
-        		break;
-    		case SOUTHEAST:
-        		currentPic = orcAnimations.get(3);
-        		break;
-    		case SOUTH:
-        		currentPic = orcAnimations.get(4);
-        		break;
-    		case SOUTHWEST:
-        		currentPic = orcAnimations.get(5);
-        		break;
-    		case WEST:
-        		currentPic = orcAnimations.get(6);
-        		break;
-    		default:
-        		currentPic = orcAnimations.get(7);
-    	}
+    	currentPic = orcAnimations.getAnimationImages(Action.FORWARD, dir);
     	
     	// Repaint the frame
     	frame.repaint();
-    	
+   	
     }
     
     
@@ -200,25 +158,65 @@ class OrcImages{
 	private final int subImageWidth = 165;
 	private final int subImageHeight = 165;
 	
-	private ArrayList<BufferedImage[]> orcForward = new ArrayList<BufferedImage[]>();
-	private ArrayList<BufferedImage[]> orcJump = new ArrayList<BufferedImage[]>();
-	private ArrayList<BufferedImage[]> orcFire = new ArrayList<BufferedImage[]>();
-	private ArrayList<BufferedImage[]> orcDie = new ArrayList<BufferedImage[]>();
+	private ArrayList<BufferedImage[]> dieImages = new ArrayList<>(8);
+	private ArrayList<BufferedImage[]>  fireImages = new ArrayList<>(8);
+	private ArrayList<BufferedImage[]>  jumpImages = new ArrayList<>(8);
+	private ArrayList<BufferedImage[]>  forwardImages = new ArrayList<>(8);
 	
 	
 	
-	public void loadAnimationSet(String setType){
-		for (AnimationType atype: AnimationType.values()){
+	public void loadAnimationSet(){
+		for (Action atype: Action.octaDirectionalValues()){
+			ArrayList<BufferedImage[]> curAction = new ArrayList<>();
 			for (Direction dir: Direction.values()){
-				String imgLoc = "images/orc/" + atype + dir.getName() + ".png";
+				String imgLoc = "images/orc/" + atype.getName() + dir.getName() + ".png";
 				BufferedImage img = createImage(imgLoc);
+				System.out.println(imgLoc);
 				int frameCount = img.getWidth() / subImageHeight;
 				BufferedImage[] pics = new BufferedImage[frameCount];
 				for(int i = 0; i < frameCount; i++) {
 					pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
 				}
+				curAction.add(pics);
 			}
+			setActionImages(atype, curAction);
 		}
+	}
+	
+	public void setActionImages(Action a, ArrayList <BufferedImage[]> img){
+		switch (a){
+			case DIE: 
+				dieImages = img;
+				break;
+			case FIRE: 
+				 fireImages = img;
+				 break;
+			case JUMP:
+				jumpImages= img;
+				break;
+			default: //FORWARD
+				forwardImages = img;
+				break;
+				
+		}
+	}
+	
+	private ArrayList<BufferedImage[]> getImageSet(Action a){
+		switch (a){
+			case DIE: 
+				return dieImages;
+			case FIRE: 
+				return fireImages;
+			case JUMP:
+				return jumpImages;
+			default: //FORWARD
+				return forwardImages;
+				
+		}
+	}
+	
+	public BufferedImage[] getAnimationImages(Action a, Direction d){
+		return getImageSet(a).get(d.ordinal());
 	}
 	
 	
@@ -237,19 +235,4 @@ class OrcImages{
 	
 }
 
-enum AnimationType {
-	DIE("orc_die_"),
-	FIRE("orc_fire_"),
-	JUMP("orc_jump_"),
-	FORWARD("orc_forward_");
 
-	private String name = null;
-
-	private AnimationType(String s){
-		name = s;
-	}
-	public String getName() {
-		return name;
-	}
-
-}
