@@ -58,7 +58,7 @@ public class View extends JPanel{
 		// Load in orc animations from /images/orc/
 		ArrayList<String> orcFileLocs = new ArrayList<String>();
     	
-    		// Read in the images using an for loop and the enumeration.
+    		// Read in the images using a for loop and the enumeration.
 		for(Direction d : Direction.values()) {
     			//System.out.println(d.getName());
     			orcFileLocs.add("images/orc/orc_forward_" + d.getName() + ".png");
