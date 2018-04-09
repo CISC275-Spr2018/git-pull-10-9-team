@@ -56,15 +56,9 @@ public class View extends JPanel{
 
 	
 	public View() {
-	
-		// Load in orc animations from /images/orc/
-		ArrayList<String> orcFileLocs = new ArrayList<String>();
-    	
-    		// Read in the images using a for loop and the enumeration.
-		for(Direction d : Direction.values()) {
-    			//System.out.println(d.getName());
-    			orcFileLocs.add("images/orc/orc_forward_" + d.getName() + ".png");
-		}
+		
+		
+    
  
 		// Store images
 		orcAnimations.loadAnimationSet();
@@ -74,15 +68,17 @@ public class View extends JPanel{
 		direct = Direction.SOUTHEAST;
 		currentPic = orcAnimations.getAnimationImages(Action.FORWARD, direct);
 		
-		//JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
-		//buttonPanel.add(startStopButton);
-		//buttonPanel.add(reverseButton);
+		JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
+	    buttonPanel.add(startStopButton);
+		buttonPanel.add(reverseButton);
 		
 			
 		// Set up the JFrame
+		
 		frame = new JFrame();
+		frame.setBackground(Color.gray);
 		frame.getContentPane().add(this, BorderLayout.CENTER);
-		//frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_END);
+		frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_END);
 		frame.getContentPane().setBackground(Color.gray);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
    		frame.setSize(viewWidth, viewHeight);
@@ -137,7 +133,7 @@ public class View extends JPanel{
 		// Draw the image on the frame
 		g.drawImage(currentPic[picNum], xLoc, yLoc, Color.gray, this);
 	}
-
+    
     // Action Listener for Reverse Button
     public void addReverseListener(ActionListener rev) {
     		reverseButton.addActionListener(rev);
@@ -174,7 +170,6 @@ class OrcImages{
 			for (Direction dir: Direction.values()){
 				String imgLoc = "images/orc/" + atype.getName() + dir.getName() + ".png";
 				BufferedImage img = createImage(imgLoc);
-				System.out.println(imgLoc);
 				int frameCount = img.getWidth() / subImageHeight;
 				BufferedImage[] pics = new BufferedImage[frameCount];
 				for(int i = 0; i < frameCount; i++) {
@@ -237,5 +232,3 @@ class OrcImages{
     }
 	
 }
-
-
