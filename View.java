@@ -28,32 +28,33 @@ import java.awt.event.ActionListener;
 public class View extends JPanel{
 	
 	// Constants for the size of the view
-	int viewWidth;
-	int viewHeight;
+	private final int viewWidth = 500;
+	private final int viewHeight = 300;
+	
+	// constant size of subImages
+	private final int subImageWidth = 165;
+	private final int subImageHeight = 165;
 	
 	// Frame count for each movement
-	ArrayList<BufferedImage[]> orcAnimations = new ArrayList<BufferedImage[]>();
+	private ArrayList<BufferedImage[]> orcAnimations = new ArrayList<BufferedImage[]>();
 
-	JFrame frame;
+	private JFrame frame;
 	// Current pic in the animation and the picNum for animation iteration
-	BufferedImage[] currentPic;
-	int picNum;
+	private BufferedImage[] currentPic;
+	private int picNum;
 	
 	// Location and Direction from Model
-	int yLoc;
-	int xLoc;
-	Direction direct;
+	private int yLoc;
+	private int xLoc;
+	private Direction direct;
 	
-	int drawDelay = 30;
+	private final int drawDelay = 30;
 	
-	JButton reverseButton = new JButton("Reverse");
-	JButton startStopButton = new JButton("Start/Stop");
+	private JButton reverseButton = new JButton("Reverse");
+	private JButton startStopButton = new JButton("Start/Stop");
 
 	
 	public View() {
-		// Set size constants
-		viewWidth = 500;
-		viewHeight = 300;
 	
 		// Load in orc animations from /images/orc/
 		ArrayList<String> orcFileLocs = new ArrayList<String>();
@@ -64,52 +65,16 @@ public class View extends JPanel{
     			orcFileLocs.add("images/orc/orc_forward_" + d.getName() + ".png");
 		}
  
+		// Store images
 		for(String imgLoc : orcFileLocs) {
 			BufferedImage img = createImage(imgLoc);
-			//For forward orc pics
-			if (img.getWidth() == 1650) {
-				int subImageWidth = 165;
-				int subImageHeight = 165;
-				int frameCount = 10;
-				BufferedImage[] pics = new BufferedImage[frameCount];
-				for(int i = 0; i < frameCount; i++) {
-					pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
-				}
-				orcAnimations.add(pics);
-			}	
-			//For jump orc pics
-			else if (img.getWidth() == 1320) {
-				int subImageWidth = 165;
-				int subImageHeight = 165;
-	    			int frameCount = 8;
-	    			BufferedImage[] pics = new BufferedImage[frameCount];
-	    			for(int i = 0; i < frameCount; i++) {
-	    				pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
-	    			}
-	    			orcAnimations.add(pics);
+			int frameCount = img.getWidth() / subImageHeight;
+			BufferedImage[] pics = new BufferedImage[frameCount];
+			for(int i = 0; i < frameCount; i++) {
+				pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
 			}
-			//For fire orc pics
-			else if (img.getWidth() == 660) {
-	    			int subImageWidth = 165;
-	    			int subImageHeight = 165;
-	    			int frameCount = 4;
-	    			BufferedImage[] pics = new BufferedImage[frameCount];
-	    			for(int i = 0; i < frameCount; i++) {
-	    				pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
-	    			}
-	    			orcAnimations.add(pics);
-			}
-			//For die orc pics
-			else if (img.getWidth() == 1624) {
-				int subImageWidth = 232;
-				int subImageHeight = 232;
-				int frameCount = 7;
-				BufferedImage[] pics = new BufferedImage[frameCount];
-	    			for(int i = 0; i < frameCount; i++) {
-	    				pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
-	    			}
-	    			orcAnimations.add(pics);
-			}
+			orcAnimations.add(pics);
+			
 		}
     	
 		// Set current pic and start animation at frame 0;
@@ -210,6 +175,7 @@ public class View extends JPanel{
     	
     }
     
+    
     protected void paintComponent(Graphics g) {
     	// Cycle through the animation cycle
 		picNum = (picNum + 1) % currentPic.length;
@@ -229,3 +195,4 @@ public class View extends JPanel{
     }
     
 }
+

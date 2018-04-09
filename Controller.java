@@ -11,14 +11,14 @@ public class Controller {
 	// Create instances of the Model and View classes
 	private Model model;
 	private View view;
-	boolean isStarted = false;
+	private boolean isStarted = false;
 	
 	
 	// Draw Delay between frames
-	final int drawDelay = 50;
+	private final int drawDelay = 50;
 
 	// The Action to be taken after every update
-	Action drawAction;
+	private Action drawAction;
 	
 	public Controller(){
 		// Create new instances of Model and View
