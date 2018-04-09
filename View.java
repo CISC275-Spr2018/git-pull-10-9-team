@@ -31,9 +31,7 @@ public class View extends JPanel{
 	private final int viewWidth = 500;
 	private final int viewHeight = 300;
 	
-	// constant size of subImages
-	private final int subImageWidth = 165;
-	private final int subImageHeight = 165;
+	
 	
 	// Frame count for each movement
 	private ArrayList<BufferedImage[]> orcAnimations = new ArrayList<BufferedImage[]>();
@@ -196,3 +194,62 @@ public class View extends JPanel{
     
 }
 
+
+class OrcImages{
+	// constant size of subImages
+	private final int subImageWidth = 165;
+	private final int subImageHeight = 165;
+	
+	private ArrayList<BufferedImage[]> orcForward = new ArrayList<BufferedImage[]>();
+	private ArrayList<BufferedImage[]> orcJump = new ArrayList<BufferedImage[]>();
+	private ArrayList<BufferedImage[]> orcFire = new ArrayList<BufferedImage[]>();
+	private ArrayList<BufferedImage[]> orcDie = new ArrayList<BufferedImage[]>();
+	
+	
+	
+	public void loadAnimationSet(String setType){
+		for (AnimationType atype: AnimationType.values()){
+			for (Direction dir: Direction.values()){
+				String imgLoc = "images/orc/" + atype + dir.getName() + ".png";
+				BufferedImage img = createImage(imgLoc);
+				int frameCount = img.getWidth() / subImageHeight;
+				BufferedImage[] pics = new BufferedImage[frameCount];
+				for(int i = 0; i < frameCount; i++) {
+					pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
+				}
+			}
+		}
+	}
+	
+	
+	
+	private BufferedImage createImage(String loc){
+    	BufferedImage bufferedImage;
+    	try {
+    		bufferedImage = ImageIO.read(new File(loc));
+    		return bufferedImage;
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	return null;
+    	
+    }
+	
+}
+
+enum AnimationType {
+	DIE("orc_die_"),
+	FIRE("orc_fire_"),
+	JUMP("orc_jump_"),
+	FORWARD("orc_forward_");
+
+	private String name = null;
+
+	private AnimationType(String s){
+		name = s;
+	}
+	public String getName() {
+		return name;
+	}
+
+}
