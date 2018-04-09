@@ -5,9 +5,12 @@ import javax.swing.Action;
 import javax.swing.Timer;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 @SuppressWarnings("serial")
-public class Controller {
+public class Controller{
+
 	// Create instances of the Model and View classes
 	private Model model;
 	private View view;
@@ -27,7 +30,7 @@ public class Controller {
 		
 		view.addStartStopListener(new StartStopListener());
 		view.addReverseListener(new ReverseListener());
-
+		view.addKeyInput(new KeyInput());
 
 		// Make our draw action update the Model and the View whenever called
 		drawAction = new AbstractAction() {
@@ -42,11 +45,49 @@ public class Controller {
 			}
 		};
 	}
-	
+	// Key Input Listener
+	class KeyInput implements KeyListener{
+		@Override
+		public void keyPressed(KeyEvent keyEvent) {
+			int code = keyEvent.getKeyCode();
+			System.out.println(code);
+			if(code == 38){
+				//moveUp()
+			}
+			else if(code == 37){
+				//moveLeft()
+			}
+			else if(code ==39){
+				//moveRight
+			}
+			else if(code == 40){
+				//moveDown()
+			}
+			else if(keyEvent.getKeyCode() == 68 /* D */ ){
+				//killOrc();
+			}
+			else if(keyEvent.getKeyCode() == 70 /* F */ ){
+				//fire();
+			}
+			else if(keyEvent.getKeyCode() == 74 /* J */){
+				//jump
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent keyEvent) {
+
+		}
+
+		@Override
+		public void keyTyped(KeyEvent keyEvent) {
+
+		}
+	}
 	// Listener
 	class ReverseListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			model.reverseDir();;
+			model.reverseDir();
 		}
 	}
 	class StartStopListener implements ActionListener {

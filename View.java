@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -116,21 +117,19 @@ public class View extends JPanel{
 		picNum = 0;
 		currentPic = orcAnimations.get(3);
 		
-		JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
-		buttonPanel.add(startStopButton);
-		buttonPanel.add(reverseButton);
+		//JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
+		//buttonPanel.add(startStopButton);
+		//buttonPanel.add(reverseButton);
 		
 			
 		// Set up the JFrame
 		frame = new JFrame();
 		frame.getContentPane().add(this, BorderLayout.CENTER);
-		frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_END);
+		//frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_END);
 		frame.getContentPane().setBackground(Color.gray);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
    		frame.setSize(viewWidth, viewHeight);
 		frame.setVisible(true);
-      
-	
 	    }
 	
 	//Accessors
@@ -216,13 +215,17 @@ public class View extends JPanel{
 		// Draw the image on the frame
 		g.drawImage(currentPic[picNum], xLoc, yLoc, Color.gray, this);
 	}
-    
-    
+
     // Action Listener for Reverse Button
     public void addReverseListener(ActionListener rev) {
     		reverseButton.addActionListener(rev);
     }
-    
+
+    public void addKeyInput(KeyListener kL){
+		frame.addKeyListener(kL);
+	//	.addKeyListener(kL);
+		System.out.println("Key Listener added");
+	}
     // Action Listener for Start/Stop Button
     public void addStartStopListener(ActionListener start) {
     	startStopButton.addActionListener(start);
