@@ -1,4 +1,4 @@
-public enum Action {
+public enum OrcAction {
 	FORWARD("orc_forward_"),
 	FIRE("orc_fire_"),
 	JUMP("orc_jump_"),
@@ -6,14 +6,14 @@ public enum Action {
 
 	private String name = null;
 
-	private Action(String s){
+	private OrcAction(String s){
 		name = s;
 	}
 	public String getName() {
 		return name;
 	}
-	public static Action[] octaDirectionalValues(){
-		Action [] result = {FORWARD, FIRE,JUMP};
+	public static OrcAction[] octaDirectionalValues(){
+		OrcAction [] result = {FORWARD, FIRE,JUMP};
 		return result;
 	}
 

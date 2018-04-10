@@ -66,7 +66,7 @@ public class View extends JPanel{
 		// Set current pic and start animation at frame 0;
 		picNum = 0;
 		direct = Direction.SOUTHEAST;
-		currentPic = orcAnimations.getAnimationImages(Action.FORWARD, direct);
+		currentPic = orcAnimations.getAnimationImages(OrcAction.FORWARD, direct);
 		
 		JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
 	    buttonPanel.add(startStopButton);
@@ -119,7 +119,7 @@ public class View extends JPanel{
     	direct = dir;
     		
     	// update the current animation to the current animation set.
-    	currentPic = orcAnimations.getAnimationImages(Action.FORWARD, dir);
+    	currentPic = orcAnimations.getAnimationImages(OrcAction.FORWARD, dir);
     	
     	// Repaint the frame
     	frame.repaint();
@@ -153,9 +153,7 @@ public class View extends JPanel{
 
 
 class OrcImages{
-	// constant size of subImages
-	private final int subImageWidth = 165;
-	private final int subImageHeight = 165;
+	
 	
 	private ArrayList<BufferedImage[]> dieImages = new ArrayList<>(8);
 	private ArrayList<BufferedImage[]>  fireImages = new ArrayList<>(8);
@@ -165,15 +163,15 @@ class OrcImages{
 	
 	
 	public void loadAnimationSet(){
-		for (Action atype: Action.octaDirectionalValues()){
+		for (OrcAction atype: OrcAction.octaDirectionalValues()){
 			ArrayList<BufferedImage[]> curAction = new ArrayList<>();
 			for (Direction dir: Direction.values()){
 				String imgLoc = "images/orc/" + atype.getName() + dir.getName() + ".png";
 				BufferedImage img = createImage(imgLoc);
-				int frameCount = img.getWidth() / subImageHeight;
+				int frameCount = img.getWidth() / getSubWidth(atype);
 				BufferedImage[] pics = new BufferedImage[frameCount];
 				for(int i = 0; i < frameCount; i++) {
-					pics[i] = img.getSubimage(subImageWidth*i, 0, subImageWidth, subImageHeight);	
+					pics[i] = img.getSubimage(getSubWidth(atype)*i, 0, getSubWidth(atype), getSubHeight(atype));	
 				}
 				curAction.add(pics);
 			}
@@ -181,7 +179,26 @@ class OrcImages{
 		}
 	}
 	
-	public void setActionImages(Action a, ArrayList <BufferedImage[]> img){
+	private int getSubWidth(OrcAction a){
+		switch (a){
+			case DIE: 
+				return 232;
+			
+			default: //FORWARD, FIRE, or JUMP
+				return 165;
+		}
+	}
+	private int getSubHeight(OrcAction a){
+		switch (a){
+			case DIE: 
+				return 232;
+			
+			default: //FORWARD, FIRE, or JUMP
+				return 165;
+		}
+	}
+	
+	public void setActionImages(OrcAction a, ArrayList <BufferedImage[]> img){
 		switch (a){
 			case DIE: 
 				dieImages = img;
@@ -199,7 +216,7 @@ class OrcImages{
 		}
 	}
 	
-	private ArrayList<BufferedImage[]> getImageSet(Action a){
+	private ArrayList<BufferedImage[]> getImageSet(OrcAction a){
 		switch (a){
 			case DIE: 
 				return dieImages;
@@ -208,12 +225,11 @@ class OrcImages{
 			case JUMP:
 				return jumpImages;
 			default: //FORWARD
-				return forwardImages;
-				
+				return forwardImages;		
 		}
 	}
 	
-	public BufferedImage[] getAnimationImages(Action a, Direction d){
+	public BufferedImage[] getAnimationImages(OrcAction a, Direction d){
 		return getImageSet(a).get(d.ordinal());
 	}
 	
