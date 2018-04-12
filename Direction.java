@@ -19,6 +19,10 @@ public enum Direction {
 	public String getName() {
 		return name;
 	}
+	public static Direction[] nonDiagonalDirections(){
+		Direction [] result = {NORTH,EAST,SOUTH,WEST};
+		return result;
+	}
 
 
 }

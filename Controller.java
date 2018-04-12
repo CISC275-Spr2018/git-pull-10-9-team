@@ -94,7 +94,6 @@ public class Controller{
 		public void actionPerformed(ActionEvent e) {
 			isStarted = !isStarted;
 		}
-
 	}
 	//run the simulation
 	public void start(){

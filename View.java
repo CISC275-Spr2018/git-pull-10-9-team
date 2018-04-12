@@ -155,17 +155,18 @@ public class View extends JPanel{
 class OrcImages{
 	
 	
-	private ArrayList<BufferedImage[]> dieImages = new ArrayList<>(8);
-	private ArrayList<BufferedImage[]>  fireImages = new ArrayList<>(8);
-	private ArrayList<BufferedImage[]>  jumpImages = new ArrayList<>(8);
-	private ArrayList<BufferedImage[]>  forwardImages = new ArrayList<>(8);
+	private ArrayList<BufferedImage[]> dieImages = new ArrayList<>();
+	private ArrayList<BufferedImage[]>  fireImages = new ArrayList<>();
+	private ArrayList<BufferedImage[]>  jumpImages = new ArrayList<>();
+	private ArrayList<BufferedImage[]>  forwardImages = new ArrayList<>();
+	
 	
 	
 	
 	public void loadAnimationSet(){
-		for (OrcAction atype: OrcAction.octaDirectionalValues()){
+		for (OrcAction atype: OrcAction.values()){
 			ArrayList<BufferedImage[]> curAction = new ArrayList<>();
-			for (Direction dir: Direction.values()){
+			for (Direction dir: atype.getDirections()){
 				String imgLoc = "images/orc/" + atype.getName() + dir.getName() + ".png";
 				BufferedImage img = createImage(imgLoc);
 				int frameCount = img.getWidth() / getSubWidth(atype);

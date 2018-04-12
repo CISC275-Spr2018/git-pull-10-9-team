@@ -12,9 +12,11 @@ public enum OrcAction {
 	public String getName() {
 		return name;
 	}
-	public static OrcAction[] octaDirectionalValues(){
-		OrcAction [] result = {FORWARD, FIRE,JUMP};
-		return result;
+	public  Direction[] getDirections(){
+		switch (this){
+			case DIE: return Direction.nonDiagonalDirections();
+			default: return Direction.values();
+		}
 	}
 
 }

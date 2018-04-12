@@ -48,6 +48,7 @@ public class Model{
 		return direction;
 	}
 	
+	
 
 	public void updateLocationAndDirection() {
 		int newX = x + xIncriment() * X_SPEED;
