@@ -3,12 +3,12 @@
 public enum Direction {
 
 	NORTH("north"),
-	NORTHEAST("northeast"),
 	EAST("east"),
-	SOUTHEAST("southeast"),
 	SOUTH("south"),
-	SOUTHWEST("southwest"),
 	WEST("west"),
+	NORTHEAST("northeast"),
+	SOUTHEAST("southeast"),
+	SOUTHWEST("southwest"),
 	NORTHWEST("northwest");
 
 	private String name = null;

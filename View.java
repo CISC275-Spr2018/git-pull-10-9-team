@@ -66,7 +66,7 @@ public class View extends JPanel{
 		// Set current pic and start animation at frame 0;
 		picNum = 0;
 		direct = Direction.SOUTHEAST;
-		currentPic = orcAnimations.getAnimationImages(OrcAction.FORWARD, direct);
+		currentPic = orcAnimations.getAnimationImages(OrcAction.JUMP, direct);
 		
 		JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
 	    buttonPanel.add(startStopButton);
@@ -119,7 +119,7 @@ public class View extends JPanel{
     	direct = dir;
     		
     	// update the current animation to the current animation set.
-    	currentPic = orcAnimations.getAnimationImages(OrcAction.FORWARD, dir);
+    	currentPic = orcAnimations.getAnimationImages(OrcAction.JUMP, dir);
     	
     	// Repaint the frame
     	frame.repaint();

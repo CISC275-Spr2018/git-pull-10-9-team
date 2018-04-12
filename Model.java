@@ -18,7 +18,7 @@ public class Model{
 	int imageHeight;
 	int x = 0;
 	int y = 0;
-	Direction direction = Direction.SOUTHEAST;
+	Direction direction = Direction.SOUTHWEST;
 	
 	final int leftBound = 0;
 	int rightBound;
