@@ -95,9 +95,8 @@ public class Controller {
 			isStarted = !isStarted;
 			view.refocus();
 		}
-	}
 
-	
+	}
 	//run the simulation
 	public void start(){
 		EventQueue.invokeLater(new Runnable(){
