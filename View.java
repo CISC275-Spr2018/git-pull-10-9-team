@@ -31,9 +31,7 @@ public class View extends JPanel{
 	// Constants for the size of the view
 	private final int viewWidth = 500;
 	private final int viewHeight = 300;
-	
-	
-	
+
 	// Frame count for each movement
 	//private ArrayList<BufferedImage[]> orcAnimations = new ArrayList<BufferedImage[]>();
 	private OrcImages orcAnimations = new OrcImages();
@@ -54,20 +52,18 @@ public class View extends JPanel{
 	private JButton reverseButton = new JButton("Reverse");
 	private JButton startStopButton = new JButton("Start/Stop");
 
+	private OrcAction currentAction;
 	
 	public View() {
-		
-		
-    
- 
 		// Store images
 		orcAnimations.loadAnimationSet();
     	
 		// Set current pic and start animation at frame 0;
 		picNum = 0;
 		direct = Direction.SOUTHEAST;
-		currentPic = orcAnimations.getAnimationImages(OrcAction.JUMP, direct);
-		
+		currentPic = orcAnimations.getAnimationImages(OrcAction.FORWARD, direct);
+		currentAction = OrcAction.FORWARD;
+
 		JPanel buttonPanel = new JPanel(new GridLayout(1,2,4,4));
 	    buttonPanel.add(startStopButton);
 		buttonPanel.add(reverseButton);
@@ -83,6 +79,7 @@ public class View extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
    		frame.setSize(viewWidth, viewHeight);
 		frame.setVisible(true);
+		frame.setFocusable(true);
 	    }
 	
 	//Accessors
@@ -119,17 +116,28 @@ public class View extends JPanel{
     	direct = dir;
     		
     	// update the current animation to the current animation set.
-    	currentPic = orcAnimations.getAnimationImages(OrcAction.JUMP, dir);
+    	currentPic = orcAnimations.getAnimationImages(currentAction, dir);
     	
     	// Repaint the frame
     	frame.repaint();
    	
     }
+
+    // Refocus attention on the main panel after button is pressed.
+	// Allows the keyListener to continue listening for input.
+    public void refocus(){
+		frame.requestFocus();
+	}
     
     
     protected void paintComponent(Graphics g) {
     	// Cycle through the animation cycle
+		if(picNum + 1 == currentPic.length){
+			currentAction = OrcAction.FORWARD;
+		}
+
 		picNum = (picNum + 1) % currentPic.length;
+
 		// Draw the image on the frame
 		g.drawImage(currentPic[picNum], xLoc, yLoc, Color.gray, this);
 	}
@@ -141,13 +149,17 @@ public class View extends JPanel{
 
     public void addKeyInput(KeyListener kL){
 		frame.addKeyListener(kL);
-	//	.addKeyListener(kL);
 		System.out.println("Key Listener added");
 	}
     // Action Listener for Start/Stop Button
     public void addStartStopListener(ActionListener start) {
     	startStopButton.addActionListener(start);
     }
+
+    public void jump(){
+		currentAction = OrcAction.JUMP;
+		picNum = -1;
+	}
     
 }
 
