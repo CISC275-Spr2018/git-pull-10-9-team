@@ -9,8 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 @SuppressWarnings("serial")
-public class Controller{
-
+public class Controller {
 	// Create instances of the Model and View classes
 	private Model model;
 	private View view;
@@ -57,7 +56,7 @@ public class Controller{
 			else if(code == 37){
 				//moveLeft()
 			}
-			else if(code ==39){
+			else if(code == 39){
 				//moveRight
 			}
 			else if(code == 40){
@@ -70,7 +69,7 @@ public class Controller{
 				//fire();
 			}
 			else if(keyEvent.getKeyCode() == 74 /* J */){
-				//jump
+				view.jump();
 			}
 		}
 
@@ -80,7 +79,7 @@ public class Controller{
 		}
 
 		@Override
-		public void keyTyped(KeyEvent keyEvent) {
+		public void keyTyped(KeyEvent keyEvent){
 
 		}
 	}
@@ -88,12 +87,15 @@ public class Controller{
 	class ReverseListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			model.reverseDir();
+			view.refocus();
 		}
 	}
 	class StartStopListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			isStarted = !isStarted;
+			view.refocus();
 		}
+
 	}
 	//run the simulation
 	public void start(){
