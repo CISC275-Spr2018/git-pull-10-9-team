@@ -3,12 +3,12 @@
 public enum Direction {
 
 	NORTH("north"),
-	NORTHEAST("northeast"),
 	EAST("east"),
-	SOUTHEAST("southeast"),
 	SOUTH("south"),
-	SOUTHWEST("southwest"),
 	WEST("west"),
+	NORTHEAST("northeast"),
+	SOUTHEAST("southeast"),
+	SOUTHWEST("southwest"),
 	NORTHWEST("northwest");
 
 	private String name = null;
@@ -18,6 +18,10 @@ public enum Direction {
 	}
 	public String getName() {
 		return name;
+	}
+	public static Direction[] nonDiagonalDirections(){
+		Direction [] result = {NORTH,EAST,SOUTH,WEST};
+		return result;
 	}
 
 
