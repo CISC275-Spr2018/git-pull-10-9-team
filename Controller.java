@@ -46,7 +46,7 @@ public class Controller {
 	// Listener
 	class ReverseListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			model.reverseDir();;
+			model.reverseDir();
 		}
 	}
 	class StartStopListener implements ActionListener {
