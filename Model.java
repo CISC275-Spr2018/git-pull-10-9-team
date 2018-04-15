@@ -48,6 +48,9 @@ public class Model{
 		return direction;
 	}
 	
+	public void setDirect(Direction d) {
+		direction = d;
+	}
 	
 
 	public void updateLocationAndDirection() {
