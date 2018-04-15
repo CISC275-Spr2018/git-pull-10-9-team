@@ -1,3 +1,4 @@
+package lab8;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -66,7 +67,7 @@ public class Controller {
 				//killOrc();
 			}
 			else if(keyEvent.getKeyCode() == 70 /* F */ ){
-				//fire();
+				view.fire();
 			}
 			else if(keyEvent.getKeyCode() == 74 /* J */){
 				view.jump();

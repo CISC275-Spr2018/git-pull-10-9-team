@@ -1,3 +1,4 @@
+package lab8;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -158,6 +159,11 @@ public class View extends JPanel{
 
     public void jump(){
 		currentAction = OrcAction.JUMP;
+		picNum = -1;
+	}
+    
+    public void fire(){
+		currentAction = OrcAction.FIRE;
 		picNum = -1;
 	}
     
