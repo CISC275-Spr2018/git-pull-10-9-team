@@ -54,6 +54,8 @@ public class Model{
 	
 
 	public void updateLocationAndDirection() {
+		
+		//Must change this so it won't change the location while running through file images
 		int newX = x + xIncriment() * X_SPEED;
 		int newY = y + yIncriment() * Y_SPEED;
 	
