@@ -1,4 +1,3 @@
-package lab8;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -53,15 +52,19 @@ public class Controller {
 			System.out.println(code);
 			if(code == 38){
 				//moveUp()
+				model.setDirect(Direction.NORTH);
 			}
 			else if(code == 37){
 				//moveLeft()
+				model.setDirect(Direction.WEST);
 			}
 			else if(code == 39){
 				//moveRight
+				model.setDirect(Direction.EAST);
 			}
 			else if(code == 40){
 				//moveDown()
+				model.setDirect(Direction.SOUTH);
 			}
 			else if(keyEvent.getKeyCode() == 68 /* D */ ){
 				//killOrc();
